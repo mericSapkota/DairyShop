@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $product = FarmerDetails::all();
@@ -22,6 +20,7 @@ class OrderController extends Controller
 
     public function showProduct($name)
     {
+        $products =  FarmerDetails::all();
         $product = FarmerDetails::where('product_name', $name)->get();
         if (!(Auth::id())) {
             $order = Order::where('user_id', null)->get();
@@ -30,8 +29,8 @@ class OrderController extends Controller
         } else {
             $order = Order::find(Auth::id());
             $or = Order::where('user_id', Auth::id())->get();
+            return view("shop.products.prod", compact('product', 'order', 'or', 'products'));
         }
-        return view("shop.products.prod", compact('product', 'order', 'or'));
     }
 
     public function unregisteredUserCart()
@@ -63,14 +62,16 @@ class OrderController extends Controller
             Order::create($request->except('product_name', 'price') +
                 [
                     'product_name' => $product->product_name,
-                    'price' => $product->price
+                    'price' => $product->price,
+                    'category' => $product->category,
                 ]);
         } else {
             Order::create($request->except('user_id', 'product_name', 'price') +
                 [
                     'user_id' => Auth::id(),
                     'product_name' => $product->product_name,
-                    'price' => $product->price
+                    'price' => $product->price,
+                    'category' => $product->category,
                 ]);
         }
         return redirect("/shop/product/{$product->product_name}");

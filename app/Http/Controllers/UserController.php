@@ -12,18 +12,26 @@ class UserController extends Controller
 {
     public function index()
     {
-
+        if (!Auth::id()) {
+            return view('layouts.guest');
+        }
         $admin = Admin::all();
         $order = Order::where('user_id', Auth::id());
+
         return view('homepage.homepage', compact('order', 'admin'));
     }
 
 
 
-    public function productsView()
+    public function productsView(Request $request)
     {
         $or = Order::where('user_id', Auth::id())->get();
+        if ($request->query('category')) {
+            $admin = FarmerDetails::where('category', $request->query('category'))->get();
+            return view('shop.bodyshop', compact('admin', 'or'));
+        }
         $admin = FarmerDetails::all();
+
         return view('shop.bodyshop', compact('admin', 'or'));
     }
     public function view($name)

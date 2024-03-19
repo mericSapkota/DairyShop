@@ -6,28 +6,31 @@ use App\Models\Admin;
 use App\Models\FarmerDetails;
 use App\Models\Payment;
 use App\Models\User;
+use App\Traits\FileStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FarmerDetailsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use FileStorage;
     public function index()
     {
 
         $admin = User::find(Auth::id());
-
         $admin = $admin->name;
+
         $a = Admin::where('name', $admin)->get();
         foreach ($a as $b) {
-
-            $payment = Payment::where('name', $b);
-            $products = FarmerDetails::all();
+            if ($b) {
+                $payment = Payment::all();
+                $products = FarmerDetails::all();
+                return view('admin.index', compact('products', 'payment'));
+            }
         }
-        return view('admin.index', compact('products', 'payment'));
+
+        echo ('you are not admin');
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,11 +45,9 @@ class FarmerDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        FarmerDetails::create($request->all() +
-            [
-                'qty' => 0,
-
-            ]);
+        FarmerDetails::create($request->except('photo') + [
+            'photo' => $this->storeFile('images/products', $request->file('photo'))
+        ]);
         return redirect('/admin');
     }
 

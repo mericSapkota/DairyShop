@@ -23,10 +23,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('farmer_details')->insert(
             [
-                'name' => 'farmer1',
-                'address' => 'Basantapur',
                 'price' => 123,
                 'qty' => 2,
+                'category' => 'icecream',
                 'product_name' => 'Pecorini Macorini',
                 'photo' => 'images/product-1.jpg'
             ],
@@ -35,50 +34,38 @@ class DatabaseSeeder extends Seeder
                 'price' => 4,
                 'qty' => 5,
                 'photo' => 'images/product-2.jpg',
-                'name' => 'farmer2',
-                'address' => 'Th'
             ],
 
             [
-                'name' => 'farmer3',
                 'qty' => 12,
-                'address' => 'sunakothi',
                 'produt_name' => 'Farm Sour Cream',
                 'price' => 22,
                 'photo' => 'images/product-3.jpg'
             ],
 
             [
-                'name' => 'farmer3',
                 'qty' => 12,
-                'address' => 'sunakothi',
                 'product_name' => 'Farm Sour Cream',
                 'price' => '$22 - $50',
                 'photo' => 'images/product-4.jpg'
             ],
 
             [
-                'name' => 'farmer3',
                 'qty' => 12,
-                'address' => 'sunakothi',
                 'product_name' => 'Farm Sour Cream',
                 'price' => '$22 - $50',
                 'photo' => 'images/product-5.jpg'
             ],
 
             [
-                'name' => 'farmer3',
                 'qty' => 12,
-                'address' => 'sunakothi',
                 'product_name' => 'Farm Sour Cream',
                 'price' => '$22 - $50',
                 'photo' => 'images/product-6.jpg'
             ],
 
             [
-                'name' => 'farmer3',
                 'qty' => 12,
-                'address' => 'sunakothi',
                 'product_name' => 'Farm Sour Cream',
                 'price' => '$22 - $50',
                 'photo' => 'images/product-8.jpg'
@@ -100,15 +87,14 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@123.com',
                 'password' => bcrypt('admin@123.com')
             ]
-            );
+        );
 
         DB::table('farmer_details')->insert(
             [
-                'name' => 'farmer1',
                 'product_name' => 'Pecorino Romano',
                 'price' => 140,
                 'qty' => 10,
-                'address' => "Chapagau",
+                'category' => 'milk',
                 'photo' => 'images/product-8.jpg'
             ]
         );

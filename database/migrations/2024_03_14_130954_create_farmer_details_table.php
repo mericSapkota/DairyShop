@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('farmer_details', function (Blueprint $table) {
             $table->id();
             $table->string('product_name');
+            $table->string('category');
             $table->integer('price');
             $table->integer('qty');
-            $table->string('name');
-            $table->string('address');
             $table->string('photo');
             $table->timestamps();
         });

@@ -23,5 +23,6 @@
           @endphp
           <p>{{$total}}</p>
         </div>
+
       </div>
     </div>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-    @section('content')
+@section('body')
 <div class="text-white">
   <form action="/update/qty/{{$milkqty->id}}" method="post">
     @csrf

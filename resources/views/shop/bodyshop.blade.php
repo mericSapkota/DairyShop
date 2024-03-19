@@ -23,6 +23,7 @@
       </div>
 
       <div>
+
         <p>Price Filter</p>
         <form action="">
           @csrf
@@ -31,10 +32,14 @@
         </form>
 
         <p>Categories</p>
-        <li>Butter</li>
-        <li>Cheese</li>
-        <li>Icecream</li>
-        <li>Milk</li>
+        @foreach($admin as $a)
+        <a href="/shop?category={{$a->category}}">
+          <li>{{$a->category}}</li>
+        </a>
+        @endforeach
+        <div class="flex justify-center">
+          <a href=""><button class="bg-yellow-500 p-2 rounded">Search</button></a>
+        </div>
       </div>
     </div>
 

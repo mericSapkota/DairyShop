@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('address');
             $table->string("product_name");
+            $table->string('category');
             $table->integer('price');
             $table->string('status')->default('oncart');
             $table->timestamps();

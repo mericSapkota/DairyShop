@@ -13,6 +13,7 @@ class Order extends Model
         'time',
         'qty',
         'product_name',
+        'category',
         'price',
         'user_id',
         'address'
