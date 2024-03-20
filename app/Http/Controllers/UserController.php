@@ -13,7 +13,9 @@ class UserController extends Controller
     public function index()
     {
         if (!Auth::id()) {
-            return view('layouts.guest');
+            $order = Order::where('user_id', Auth::id());
+
+            return view('shop.unregistered.homepage');
         }
         $admin = Admin::all();
         $order = Order::where('user_id', Auth::id());

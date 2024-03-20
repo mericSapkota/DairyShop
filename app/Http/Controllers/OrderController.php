@@ -25,7 +25,7 @@ class OrderController extends Controller
         if (!(Auth::id())) {
             $order = Order::where('user_id', null)->get();
             $or = $order;
-            return view('shop.unregistered.prod', compact('order', 'product'));
+            return view('shop.unregistered.prod', compact('order', 'or', 'product'));
         } else {
             $order = Order::find(Auth::id());
             $or = Order::where('user_id', Auth::id())->get();
