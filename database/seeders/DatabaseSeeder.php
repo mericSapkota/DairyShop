@@ -3,14 +3,17 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Traits\FileStorage;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
+    use FileStorage;
+
+
     public function run(): void
     {
         DB::table('admins')->insert(
@@ -19,7 +22,9 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@123.com',
                 'password' => bcrypt('admin@123.com')
             ]
+
         );
+
 
         DB::table('farmer_details')->insert(
             [
@@ -27,7 +32,7 @@ class DatabaseSeeder extends Seeder
                 'qty' => 2,
                 'category' => 'icecream',
                 'product_name' => 'Pecorini Macorini',
-                'photo' => 'images/product-1.jpg'
+                'photo' => 'products.1',
             ],
             [
                 'product_name' => 'Evaporated Milk',
@@ -95,7 +100,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 140,
                 'qty' => 10,
                 'category' => 'milk',
-                'photo' => 'images/product-8.jpg'
+                'photo' => '',
             ]
         );
     }

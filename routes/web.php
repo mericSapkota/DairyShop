@@ -25,9 +25,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -39,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin', [FarmerDetailsController::class, 'store']);
     Route::get('/admin/products/edit/{id}', [FarmerDetailsController::class, 'edit']);
     Route::patch("/update/qty/{id}", [FarmerDetailsController::class, 'update']);
-    Route::delete('admin/products/delete/{id}', [FarmerDetailsController::class, 'delete']);
+    Route::delete('admin/products/delete/{id}', [FarmerDetailsController::class, 'destroy']);
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -63,13 +60,20 @@ Route::get('/payment/create', [PaymentController::class, 'index']);
 require __DIR__ . '/auth.php';
 Route::get('payment/unregisteredIndex', [PaymentController::class, 'urIndex']);
 
+Route::get('/', [UserController::class, "index"]);
+
 Route::get('/home', [UserController::class, "index"]);
-Route::get('/shop', [UserController::class, 'productsView']);
+Route::GET('/shop', [UserController::class, 'productsView']);
+Route::post('/shop', [UserController::class, 'productsView']);
+
 Route::get("/shop/product/{name}", [OrderController::class, "showProduct"]);
 
-Route::get("/cart/{id}", [OrderController::class, 'cart']);
+Route::get("/cart", [OrderController::class, 'cart']);
+Route::get("/cart/edit/{id}", [OrderController::class, 'edit']);
+Route::post("/cart/update/{id}", [OrderController::class, 'update']);
+Route::get("/cart/delete/{id}", [OrderController::class, 'destroy']);
 Route::get('/payment/{id}', [PaymentController::class, 'index']);
 Route::post('/payment/{id}', [PaymentController::class, 'store']);
 
 
-Route::get('/cart', [OrderController::class, 'unregisteredUserCart']);
+// Route::get('/cart', [OrderController::class, 'unregisteredUserCart']);

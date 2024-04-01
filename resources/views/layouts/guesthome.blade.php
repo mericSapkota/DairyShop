@@ -21,11 +21,9 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100  dark:bg-gray-900" style="font-family: poppins;">
-        @include('layouts.header')
+        @include('layouts.guestheader')
         @yield('body')
         @include('layouts.footer')
-    </div>
 </body>
 
 </html>

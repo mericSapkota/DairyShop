@@ -21,26 +21,19 @@
           <th>Product</th>
           <th class="px-6">Price</th>
           <th class="px-6">Quantity</th>
-          <th class="px-6">Total</th>
-          <th class="px-6">Update</th>
-          <th class="px-6">Delete</th>
-          <th class="px-6">CheckOut</th>
+          <th class="px-6">Confirm</th>
         </tr>
-        @foreach($order as $o)
-        @php
-        $p = explode('/',$o->price);
 
-        @endphp
         <tr>
-          <td class="text-yellow-400 text-xl">{{$o->product_name}}</td>
-          <td>{{$o->price}}</td>
-          <td>{{$o->qty}}</td>
-          <td>{{$p[0] * $o->qty}}</td>
-          <td><a href=""><button>Update</button></a></td>
-          <td><a href=""><button class="bg-red-500 px-4 py-2 rounded">Delete</button></a></td>
-          <td><a href="/payment/unregisteredIndex"><button class="bg-green-500 rounded px-4 py-2">CheckOut</button></a></td>
+          <form action="/cart/update/{{$o->id}}" method="post">
+            @csrf
+            <td class="text-yellow-400 text-xl"><input type="text" name="product_name" value="{{$o->product_name}}"></td>
+            <td>{{$o->price}}</td>
+            <td><input type="text" value="{{$o->qty}}" name="qty"></td>
+            <td><input type="submit" class="bg-green-500 rounded px-4 py-2" value="Confirm"></td>
+          </form>
         </tr>
-        @endforeach
+
       </table>
     </div>
 

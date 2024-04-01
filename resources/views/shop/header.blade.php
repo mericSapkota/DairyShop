@@ -9,20 +9,26 @@
         <div class="bg-yellow-300 rounded-full w-10 h-10 flex items-center justify-center">
           <i class="fa-solid fa-cart-shopping fa-lg"></i>
         </div>
-        <div>
 
-          @if($or)
-          <p>Cart: {{count($or)}} Items</p>
-          @endif
+        <a href="/cart">
+          <div>
 
-          @php
-          $total = 0;
-          foreach($or as $o)
-          $total += $o->price * $o->qty;
+            @if($or)
+            <p>Cart: {{count($or)}} Items</p>
+            @endif
 
-          @endphp
-          <p>{{$total}}</p>
-        </div>
+            @php
+            $total = 0;
+            foreach($or as $op){
+            $e = explode('/',$op->price);
+            $total += $e[0] * $op->qty;
+            }
+
+
+            @endphp
+            <p>${{$total}}</p>
+          </div>
+        </a>
 
       </div>
     </div>

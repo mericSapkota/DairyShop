@@ -18,8 +18,11 @@
     <div class="flex flex-col w-80 gap-4">
       <p class="text-2xl font-bold">Billing Details </p>
       @foreach($or as $o)
+      @php
+      $p = explode('/',$o->price);
+      @endphp
       <p>Address: {{$o->address}}</p>
-      <p>Price: {{$o->price * $o->qty}}</p>
+      <p>Price: {{$p[0] * $o->qty}}</p>
 
       <div>
         <form class="flex flex-col gap-4" action="/payment/{{$o->id}}" method="post" enctype="multipart/form-data">

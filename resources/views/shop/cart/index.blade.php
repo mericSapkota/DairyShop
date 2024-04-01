@@ -32,8 +32,8 @@
           <td>{{$o->price}}</td>
           <td>{{$o->qty}}</td>
           <td>{{$o->price * $o->qty}}</td>
-          <td><a href=""><button>Update</button></a></td>
-          <td><a href=""><button class="bg-red-500 px-4 py-2 rounded">Delete</button></a></td>
+          <td><a href="/cart/edit/{{$o->id}}"><button>Update</button></a></td>
+          <td><a href="/cart/delete/{{$o->id}}"><button class="bg-red-500 px-4 py-2 rounded">Delete</button></a></td>
           <td><a href="/payment/{{$o->id}}"><button class="bg-green-500 rounded px-4 py-2">CheckOut</button></a></td>
         </tr>
         @endforeach

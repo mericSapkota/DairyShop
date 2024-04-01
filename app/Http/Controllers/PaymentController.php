@@ -44,10 +44,12 @@ class PaymentController extends Controller
     public function store(Request $request, $id)
     {
         $order = Order::find($id);
+        $o = explode('/', $order->price);
+
         Payment::create($request->except('ss', 'order_id', 'amount') + [
             'ss' => $this->storeFile('images/payments', $request->file('ss')),
             'order_id' => $order->id,
-            'amount' => $order->price * $order->qty,
+            'amount' => $o[0] * $order->qty,
 
         ]);
         $order->update();

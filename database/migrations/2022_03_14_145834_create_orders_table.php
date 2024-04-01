@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('qty');
+            $table->string('qty');
             $table->date('date');
             $table->time('time');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('address');
             $table->string("product_name");
             $table->string('category');
-            $table->integer('price');
+            $table->string('price');
             $table->string('status')->default('oncart');
             $table->timestamps();
         });

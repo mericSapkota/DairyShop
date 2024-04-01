@@ -17,16 +17,9 @@
     </div>
   </div>
   <div>
-    @if($order)
+    @if($or)
     @foreach($product as $p)
-
-
-    <div>Your order has been added to cart. {{$p->product_name}} <a href="/cart"><button>View Cart</button></a></div>
-
-
-
-
-
+    <div class="flex justify-center"><a href="/cart"><button>View Cart</button></a></div>
     @endforeach
     @endif
 
@@ -38,19 +31,19 @@
     </div>
     <div class="flex flex-col gap-3">
       @foreach($product as $p)
-      <form class="mt-10 flex flex-col gap-4" action="/shop/cart/{{$p->id}}" method="post">
+      <form class=" flex flex-col gap-4" action="/shop/cart/{{$p->id}}" method="post">
         @csrf
         <p class=" text-3xl font-bold">{{$p->product_name}}</p>
         <p class="text-2xl font-bold">${{$p->price}}</p>
         <p class="text-slate-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel tenetur rem magni quam voluptates eius est mollitia, ab laudantium aut quod autem itaque facere necessitatibus ipsam cupiditate sit quidem dolor?</p>
-
-        <input type="text" name=qty placeholder="Enter Qty">
+        <p>Qty available :{{$p->qty}}</p>
+        <input type="number" name=qty placeholder="Enter Qty">
         <input type="date" name="date">
         <input type="time" name="time">
         <input type="text" name="address" placeholder="Address"><br>
         <input type="submit" class="bg-yellow-500 px-4 py-2 rounded" value="Add to Cart">
       </form>
-      <p>Qty available :</p>
+
       @endforeach
     </div>
   </div>
@@ -59,25 +52,21 @@
     <div>
       <p class="text-center text-4xl font-bold">Related Products</p>
     </div>
-
-
     <div class="container mx-auto  px-10 grid grid-cols-4 w-xl gap-10">
 
-      <div class="border border-yellow-500 flex flex-col justify-center ">
-        <div>
-          <img class="object-cover" src="{{asset('images/product-1.jpg')}}" alt="">
-        </div>
-        <div class="text-center flex flex-col gap-3 mb-5">
-          <p>Namw</p>
-          <p>price</p>
-          <a href=""><button class="bg-yellow-400 rounded px-4 py-2">Check Out</button></a>
-        </div>
-      </div>
-
-
-
+      @foreach($products as $a)
+      @php
+      $items = [
+      ['name'=> $a->product_name,
+      'price' => $a->price,
+      'img' => $a->photo
+      ]]
+      @endphp
+      @each('components.relatedProducts', $items,'item')
+      @endforeach
     </div>
   </div>
+
 
 </div>
 @endsection

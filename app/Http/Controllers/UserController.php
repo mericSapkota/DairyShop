@@ -12,15 +12,16 @@ class UserController extends Controller
 {
     public function index()
     {
+        $or = Order::where('user_id', Auth::id())->get();
+
         if (!Auth::id()) {
             $order = Order::where('user_id', Auth::id());
-
             return view('shop.unregistered.homepage');
         }
         $admin = Admin::all();
         $order = Order::where('user_id', Auth::id());
 
-        return view('homepage.homepage', compact('order', 'admin'));
+        return view('homepage.homepage', compact('order', 'or', 'admin'));
     }
 
 
@@ -28,13 +29,35 @@ class UserController extends Controller
     public function productsView(Request $request)
     {
         $or = Order::where('user_id', Auth::id())->get();
-        if ($request->query('category')) {
-            $admin = FarmerDetails::where('category', $request->query('category'))->get();
-            return view('shop.bodyshop', compact('admin', 'or'));
-        }
-        $admin = FarmerDetails::all();
+        $total = 0;
 
-        return view('shop.bodyshop', compact('admin', 'or'));
+        foreach ($or as $o) {
+            $ot = explode('/', $o);
+        }
+
+        if ($request->price) {
+            $p = explode('-', $request->price);
+            $pr = FarmerDetails::all();
+            foreach ($pr as $ep) {
+                $ep = FarmerDetails::where('id', $ep->id)->get();
+                $exploded = explode('/', $ep[0]->price);
+                $category = $ep[0]->category;
+
+                if (($exploded[0] >= $p[0] && $exploded[0] <= $p[1]) && $category == $request->category) {
+                    $admin = $ep;
+                    $admins = FarmerDetails::all();
+                    return view('shop.bodyshop', compact('admin', 'admins', 'or', 'request'));
+                } else {
+                    continue;
+                }
+            }
+            // $admin = FarmerDetails::where('price', ">=", $p[0])->where('exploded[0]', '<=', $p[1])->where('category', $request->category)->get();
+
+        } else {
+            $admin = FarmerDetails::all();
+            $admins = FarmerDetails::all();
+            return view('shop.bodyshop', compact('admin', 'admins', 'or', 'request'));
+        }
     }
     public function view($name)
     {

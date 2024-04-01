@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\FarmerDetails;
+use App\Models\Order;
 use App\Models\Payment;
 use App\Models\User;
 use App\Traits\FileStorage;
@@ -15,6 +16,8 @@ class FarmerDetailsController extends Controller
     use FileStorage;
     public function index()
     {
+        $or = Order::where('user_id', Auth::id())->get();
+
 
         $admin = User::find(Auth::id());
         $admin = $admin->name;
@@ -24,7 +27,7 @@ class FarmerDetailsController extends Controller
             if ($b) {
                 $payment = Payment::all();
                 $products = FarmerDetails::all();
-                return view('admin.index', compact('products', 'payment'));
+                return view('admin.index', compact('products', 'or', 'payment'));
             }
         }
 
@@ -37,7 +40,9 @@ class FarmerDetailsController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        $or = Order::where('user_id', Auth::id())->get();
+
+        return view('admin.products.create', compact('or'));
     }
 
     /**
@@ -67,8 +72,10 @@ class FarmerDetailsController extends Controller
      */
     public function edit(FarmerDetails $farmerDetails, $id)
     {
-        $milkqty = FarmerDetails::find($id);
-        return view("admin.products.addMilk", compact('milkqty'));
+        $or = Order::where('user_id', Auth::id())->get();
+
+        $farmer = FarmerDetails::find($id);
+        return view("admin.products.edit_products", compact('farmer', 'or'));
     }
 
     /**
@@ -77,15 +84,19 @@ class FarmerDetailsController extends Controller
     public function update(Request $request, FarmerDetails $farmerDetails, $id)
     {
         $farmerDetails = FarmerDetails::find($id);
-        $farmerDetails->update($request->all());
+        $farmerDetails->update($request->except('photo') + [
+            'photo' => $this->storeFile('images/products', $request->photo)
+        ]);
         return redirect("/admin");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FarmerDetails $farmerDetails)
+    public function destroy(FarmerDetails $farmerDetails, $id)
     {
-        //
+        $farmer = FarmerDetails::find($id);
+        $farmer->delete($farmer);
+        return redirect('admin');
     }
 }

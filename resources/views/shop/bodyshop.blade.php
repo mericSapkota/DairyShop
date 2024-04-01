@@ -18,28 +18,36 @@
   <div class="container mx-auto px-10  flex justify-between">
     <div class="bg-red-100 w-3/12 h-max py-12 px-10 flex gap-10 flex-col">
       <div>
-        <p class="text-3xl ">Your Cart</p>
-        <p class="text-slate-400 text-sm">No Products in cart</p>
+        <p class="text-3xl ">Filter</p>
+
       </div>
 
-      <div>
+      <div class="flex flex-col gap-4">
 
-        <p>Price Filter</p>
-        <form action="">
+        <form action="/shop" method="post">
           @csrf
-          <label for="vol">Volume (0-50)</label>
-          <input type="range" name="vol" min='0' max='50'>
+          @method('POST')
+          <p>Price</p>
+          @if($request->price)
+          <input type="text" placeholder="0-200" name="price" value="{{$request->price}}">
+          @else
+          <input type="text" placeholder="0-200" name="price" value="0-1000">
+          @endif
+          <p>Categories</p>
+
+          <select name="category" id="">
+            @foreach($admins as $a)
+            <option value="{{$a->category}}">{{$a->category}}</option>
+            @endforeach
+          </select>
+
+          <div class="flex justify-center">
+            <button type="submit" class="bg-yellow-300 my-5 rounded px-3 py-2">Search</button>
+          </div>
         </form>
 
-        <p>Categories</p>
-        @foreach($admin as $a)
-        <a href="/shop?category={{$a->category}}">
-          <li>{{$a->category}}</li>
-        </a>
-        @endforeach
-        <div class="flex justify-center">
-          <a href=""><button class="bg-yellow-500 p-2 rounded">Search</button></a>
-        </div>
+
+
       </div>
     </div>
 
